@@ -1,0 +1,16 @@
+version: '3.1'
+
+services:
+  jastro_ecosystem:
+    container_name: jastro_ecosystem
+    build:
+      context: .
+      dockerfile: Dockerfile
+    user: root
+    image: jastro_ecosystem
+    network_mode: "host"
+    environment:
+      TZ: "Europe/London"
+    volumes:
+      - /data/:/data
+      - /home/ops/src/process:/process

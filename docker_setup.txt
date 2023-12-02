@@ -1,0 +1,34 @@
+# Steps to install docker on ngts cluster
+
+# as root
+yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+yum install -y docker-ce docker-ce-cli containerd.io
+systemctl start docker
+usermod -aG docker jmcc
+curl -L "https://github.com/docker/compose/releases/download/1.29.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+chmod +x /usr/local/bin/docker-compose
+
+# as jmcc
+newgrp docker 
+docker run hello-world
+docker-compose --version
+
+
+#On rocky 9
+
+# as root
+sudo dnf remove podman buildah -y
+sudo dnf config-manager --add-repo=https://download.docker.com/linux/centos/docker-ce.repo
+sudo dnf install -y docker-ce
+sudo dnf install docker-compose-plugin -y
+# sudo dnf install docker-ce --allowerasing -y *** if container.io errors pop up ***
+sudo systemctl start docker
+sudo systemctl enable docker
+sudo systemctl status docker
+sudo usermod -aG docker $USER
+
+# as jmcc
+newgrp docker
+docker run hello-world
+docker-compose --version
+
